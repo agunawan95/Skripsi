@@ -1,0 +1,189 @@
+{% extends "layouts/layout-main.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-9">
+        <div class="row mtbox">
+            <div class="col-md-2 col-sm-2 col-md-offset-1 box0">
+                <div class="box1">
+                    <span class="lnr lnr-database"></span>
+                    <h3>500 Mb</h3>
+                </div>
+                <p>Total Storage Used: 500 Mb</p>
+            </div>
+            <div class="col-md-2 col-sm-2 box0">
+                <div class="box1">
+                    <span class="lnr lnr-file-empty"></span>
+                    <h3>50</h3>
+                </div>
+                <p>Total File in Server: 50 Files</p>
+            </div>
+            <div class="col-md-2 col-sm-2 box0">
+                <div class="box1">
+                    <span class="lnr lnr-star"></span>
+                    <h3>5</h3>
+                </div>
+                <p>Total Project in Server: 5 Projects</p>
+            </div>
+            <div class="col-md-2 col-sm-2 box0">
+                <div class="box1">
+                    <span class="lnr lnr-thumbs-up"></span>
+                    <h3>5</h3>
+                </div>
+                <p>Total Model Created: 5 Model</p>
+            </div>
+            <div class="col-md-2 col-sm-2 box0">
+                <div class="box1">
+                    <span class="lnr lnr-heart-pulse"></span>
+                    <h3>OK!</h3>
+                </div>
+                <p>Server in Good Condition, Mode: <b>Single Machine</b></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <h2 class="page-header" style="margin-top: 0;">Latest Project</h2>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="darkblue-panel pn">
+                            <div class="darkblue-header">
+                                <h5>Decision Tree - West Nile</h5>
+                            </div>
+                            <div class="text-center">
+                                <a href="#"><img src="{{ url_for('static', filename='img/project.png') }}" alt="" width="120"></a>
+                            </div>
+                            <p style="margin-top: 5px;">April 17, 2014</p>
+                            <footer>
+                                <div class="pull-left">
+                                    <h5><i class="fa fa-hdd-o"></i> 17 GB</h5>
+                                </div>
+                                <div class="pull-right">
+                                    <h5>Accuracy: 60%</h5>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="darkblue-panel pn">
+                            <div class="darkblue-header">
+                                <h5>Human Resource Eval</h5>
+                            </div>
+                            <div class="text-center">
+                                <a href="#"><img src="{{ url_for('static', filename='img/project.png') }}" alt="" width="120"></a>
+                            </div>
+                            <p style="margin-top: 5px;">April 17, 2014</p>
+                            <footer>
+                                <div class="pull-left">
+                                    <h5><i class="fa fa-hdd-o"></i> 17 GB</h5>
+                                </div>
+                                <div class="pull-right">
+                                    <h5>Accuracy: 60%</h5>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="darkblue-panel pn">
+                            <div class="darkblue-header">
+                                <h5>House Price Prediction</h5>
+                            </div>
+                            <div class="text-center">
+                                <a href="#"><img src="{{ url_for('static', filename='img/project.png') }}" alt="" width="120"></a>
+                            </div>
+                            <p style="margin-top: 5px;">April 17, 2014</p>
+                            <footer>
+                                <div class="pull-left">
+                                    <h5><i class="fa fa-hdd-o"></i> 17 GB</h5>
+                                </div>
+                                <div class="pull-right">
+                                    <h5>Accuracy: 60%</h5>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 ds">
+        <h3> <i class="fa fa-history"></i> LOG </h3>
+
+        <!-- First Action -->
+        <div class="desc">
+            <div class="thumb">
+                <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+            </div>
+            <div class="details">
+                <p><muted>2 Minutes Ago</muted><br/>
+                   <a href="#">James Brown</a> subscribed to your newsletter.<br/>
+                </p>
+            </div>
+        </div>
+        <!-- Second Action -->
+        <div class="desc">
+        <div class="thumb">
+        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+        </div>
+        <div class="details">
+        <p><muted>3 Hours Ago</muted><br/>
+           <a href="#">Diana Kennedy</a> purchased a year subscription.<br/>
+        </p>
+        </div>
+        </div>
+        <!-- Third Action -->
+        <div class="desc">
+        <div class="thumb">
+        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+        </div>
+        <div class="details">
+        <p><muted>7 Hours Ago</muted><br/>
+           <a href="#">Brandon Page</a> purchased a year subscription.<br/>
+        </p>
+        </div>
+        </div>
+        <!-- Fourth Action -->
+        <div class="desc">
+        <div class="thumb">
+        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+        </div>
+        <div class="details">
+        <p><muted>11 Hours Ago</muted><br/>
+           <a href="#">Mark Twain</a> commented your post.<br/>
+        </p>
+        </div>
+        </div>
+        <!-- Fifth Action -->
+        <div class="desc">
+        <div class="thumb">
+        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+        </div>
+        <div class="details">
+        <p><muted>18 Hours Ago</muted><br/>
+           <a href="#">Daniel Pratt</a> purchased a wallet in your store.<br/>
+        </p>
+        </div>
+        </div>
+        <!-- Fifth Action -->
+        <div class="desc">
+        <div class="thumb">
+        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+        </div>
+        <div class="details">
+        <p><muted>18 Hours Ago</muted><br/>
+           <a href="#">Daniel Pratt</a> purchased a wallet in your store.<br/>
+        </p>
+        </div>
+        </div>
+        <!-- Fifth Action -->
+        <div class="desc">
+        <div class="thumb">
+        <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+        </div>
+        <div class="details">
+        <p><muted>18 Hours Ago</muted><br/>
+           <a href="#">Daniel Pratt</a> purchased a wallet in your store.<br/>
+        </p>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

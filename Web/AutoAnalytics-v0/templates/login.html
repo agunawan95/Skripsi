@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+    <title>Analytics Dashboard</title>
+    <link rel=icon href="{{ url_for('static', filename='img/logo.png') }}">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='assets/css/bootstrap.css') }}" rel="stylesheet">
+    <!--external css-->
+    <link href="{{ url_for('static', filename='assets/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+        
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/style-responsive.css') }}" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+
+	  <div id="login-page">
+	  	<div class="container">
+	  	
+		      <form class="form-login" action="/login" method="post">
+		        <h2 class="form-login-heading"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="" width="32"> &nbsp; sign in now</h2>
+                    {% if err %}
+                        <div class="alert alert-danger">
+						<i class="fa fa-warning"></i> &nbsp; {{ msg }}
+					</div>
+                    {% endif %}
+					<div class="login-wrap">
+						<input type="text" name="username" class="form-control" placeholder="Username" autofocus>
+						<br>
+						<input type="password" name="password" class="form-control" placeholder="Password">
+						<br>
+						<button class="btn btn-theme btn-block" name="submit" type="submit"><i class="fa fa-lock"></i> &nbsp; SIGN IN</button>
+						<hr>
+
+						<div class="login-social-link centered">
+							<p class="text-center">
+								Developed by: Andre Gunawan - 26414004
+							</p>
+						</div>
+					</div>
+		
+		      </form>	  	
+	  	
+	  	</div>
+	  </div>
+
+        <!-- js placed at the end of the document so the pages load faster -->
+        <script src="{{ url_for('static', filename='assets/js/jquery.js') }}"></script>
+        <script src="{{ url_for('static', filename='assets/js/bootstrap.min.js') }}"></script>
+
+        <!--BACKSTRETCH-->
+        <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+        <script type="text/javascript" src="{{ url_for('static', filename='assets/js/jquery.backstretch.min.js') }}"></script>
+        <script>
+            $.backstretch("{{ url_for('static', filename='img/login.jpg') }}", {speed: 500});
+        </script>
+        <script type="text/javascript" src="{{ url_for('static', filename='assets/js/notify/bootstrap-notify.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='assets/js/notify/bootstrap-notify.min.js') }}"></script>
+      <script>
+      </script>
+  </body>
+</html>

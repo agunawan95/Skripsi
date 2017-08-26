@@ -1,0 +1,59 @@
+<aside>
+  <div id="sidebar"  class="nav-collapse ">
+      <!-- sidebar menu start-->
+      <ul class="sidebar-menu" id="nav-accordion">
+
+          <p class="centered"><a href="/"><img src="{{ url_for('static', filename='img/logo.png') }}" class="" width="60"></a></p>
+          <h5 class="centered">Auto Analytics</h5>
+
+          <li class="mt">
+              <a {% if session['page'] == 'home' %} class="active" {% endif %} href="/">
+                  <i class="lnr lnr-home"></i>
+                  <span>Dashboard</span>
+              </a>
+          </li>
+
+          <li class="sub-menu">
+              <a href="javascript:;" {% if session['page'] == 'files' %} class="active" {% endif %}>
+                  <i class="lnr lnr-file-empty"></i>
+                  <span>My Files</span>
+              </a>
+              <ul class="sub">
+                  <li><a  href="/files">Personal Files</a></li>
+                  <li><a  href="/share">Shared With Me</a></li>
+              </ul>
+          </li>
+
+          <li class="sub-menu">
+              <a href="javascript:;" {% if session['page'] == 'project' %} class="active" {% endif %}>
+                  <i class="lnr lnr-paperclip"></i>
+                  <span>My Projects</span>
+              </a>
+              <ul class="sub">
+                  <li><a  href="/project/add">Add Project</a></li>
+                  <li><a  href="#">View Project</a></li>
+              </ul>
+          </li>
+
+          {% if session['auth'] != 'user' %}
+          <li>
+              <a {% if session['page'] == 'users' %} class="active" {% endif %} href="/users">
+                  <i class="lnr lnr-users"></i>
+                  <span>Users</span>
+              </a>
+          </li>
+          {% endif %}
+
+          {% if session['auth'] == 'root' %}
+          <li>
+              <a class="" href="#">
+                  <i class="lnr lnr-magic-wand"></i>
+                  <span>Root Setting</span>
+              </a>
+          </li>
+          {% endif %}
+
+      </ul>
+      <!-- sidebar menu end-->
+  </div>
+</aside>

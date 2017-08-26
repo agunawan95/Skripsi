@@ -1,0 +1,99 @@
+{% extends "layouts/layout-main.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <h1 class="page-header"><i class="lnr lnr-plus-circle"></i> Add Project</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <blockquote>
+            First Select a File to Work With
+        </blockquote>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <select name="file" id="file" class="form-control">
+                <option value="1">File 1</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <button class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add This File</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <h4 class="page-header"><i class="fa fa-search"></i> Preview</h4>
+        <div style="overflow-x: scroll; width: 100%" id="preview">
+            <div class="text-center">
+                <img src="{{ url_for('static', filename='img/loading.gif') }}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <blockquote>
+            Next Customize Project Configuration
+        </blockquote>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Recommend Methods Configuration</div>
+            <div class="panel-body">
+                <div class="row" style="padding-bottom: 5px;">
+                    <div class="col-sm-12">
+                        <div class="radio">
+                            <label for="speed"><input type="radio" name="config-method" id="speed" value="speed"> Speed</label>
+                        </div>
+                        <div class="radio">
+                            <label for="accuracy"><input type="radio" name="config-method" id="accuracy" value="accuracy" checked> Accuracy</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Data Display Configuration</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form>
+                            <div class="form-group">
+                                <label for="nrow">Number of Row Displayed: </label>
+                                <input type="text" class="form-control bfh-number" value="10" name="nrow" id="nrow">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <hr>
+        <div class="text-right">
+            <button class="btn btn-danger"><i class="fa fa-remove"></i> Cancel & Back</button>
+            <button class="btn btn-success"><i class="fa fa-check"></i> Finish</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        })
+        $("#file").select2();
+    });
+</script>
+{% endblock %}

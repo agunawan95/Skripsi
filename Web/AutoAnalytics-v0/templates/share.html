@@ -1,0 +1,80 @@
+{% extends "layouts/layout-main.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <h1 class="page-header"><i class="lnr lnr-file-empty"></i> Shared With Me</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <form action="/share/s" method="post">
+            <div class="input-group">
+                <input type="text" name="search" id="search" class="form-control round-form" placeholder="Search">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary btn-round"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <hr>
+    </div>
+</div>
+{% for file in files %}
+    {% if (loop.index - 1) % 4 == 0 %}
+        <div class="row" style="margin-top: 15px;">
+    {% endif %}
+        <div class="col-sm-3">
+            <div class="grey-panel pn">
+                <div class="grey-header">
+                    <h5>{{ file['name'] }}</h5>
+                </div>
+                <div class="centered">
+                    <img src="{{ url_for('static', filename='img/csv.png') }}" alt="" width="110">
+                </div>
+                <br>
+                <p>{{ filesize('upload/' + file['location']) }}</p>
+                <footer>
+                    <div class="centered">
+                        <a href="#" class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-search"></i></a>
+                        <a href="/api/download/{{ file['id'] }}" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="bottom" title="Download"><i class="fa fa-download"></i></a>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    {% if (loop.index - 1) % 4 == 3 or loop.last %}
+        </div>
+    {% endif %}
+{% endfor %}
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Upload a File</h4>
+            </div>
+            <form enctype="multipart/form-data" id="upload-file">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="file">File: </label>
+                        <input type="file" name="file" id="file" class="filestyle" data-btnClass="btn-primary">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" name="upload" id="upload" class="btn btn-success"><i class="fa fa-cloud-upload"></i> &nbsp; Upload File</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

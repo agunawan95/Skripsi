@@ -1,0 +1,363 @@
+{% extends "layouts/layout-main.html" %}
+{% block content %}
+<script src="{{ url_for('static', filename='add-on/bootstrap-formhelpers-phone.js') }}"></script>
+<script>
+    function delete_user(id){
+        $.confirm({
+            title: 'Are you sure?',
+            content: 'By deleting this user you remove all files and project of this user !',
+            buttons: {
+                confirm: {
+                    text: 'Confirm',
+                    btnClass: 'btn-red',
+                    action: function(){
+                        $.delete("/api/user/" + id, {}, function(data){
+                            if(data['err']){
+                                $.notify({
+                                    // options
+                                    icon: 'glyphicon glyphicon-warning-sign',
+                                    message: data['msg']
+                                },{
+                                    // settings
+                                    type: 'danger'
+                                });
+                            }else{
+                               $.notify({
+                                    // options
+                                    icon: 'glyphicon glyphicon-ok-circle',
+                                    message: 'Success!'
+                                },{
+                                    // settings
+                                    type: 'success'
+                                });
+                                setTimeout(location.reload.bind(location), 800);
+                            }
+                        });
+                    }
+                },
+                cancel: function () {
+
+                }
+            }
+        });
+    }
+
+    function edit_user(id){
+        $.get("/api/user/" + id, {}, function(data){
+            $("#edit-username").val(data['username']);
+            $("#edit-user").val(id);
+            if(data['auth'] == 'admin'){
+                $("#enterprise-edit-name").val(data['enterprise']['name']);
+                $("#enterprise-edit-address").val(data['enterprise']['address']);
+                $("#enterprise-edit-phone").val(data['enterprise']['phone']);
+                $("#enterprise-edit-email").val(data['enterprise']['email']);
+                $("#enterprise-edit-filesize").val(data['enterprise']['filesize_limit']);
+                $("#enterprise-edit-user").val(data['enterprise']['user_limit']);
+            }
+            $("#edit-user-modal").modal();
+        });
+    }
+
+    function humanFileSize(bytes, si) {
+        var thresh = si ? 1000 : 1024;
+        if(Math.abs(bytes) < thresh) {
+            return bytes + ' B';
+        }
+        var units = si
+            ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+            : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+        var u = -1;
+        do {
+            bytes /= thresh;
+            ++u;
+        } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+        return bytes.toFixed(1)+' '+units[u];
+    }
+
+    $(document).ready(function(){
+        $("#edit-user").click(function(){
+            username = $("#edit-username").val();
+            password = $("#edit-password").val();
+            confirm = $("#edit-confirm").val();
+            id = $("#edit-user").val();
+            if(password != confirm){
+                $.notify({
+                    // options
+                    icon: 'glyphicon glyphicon-warning-sign',
+                    message: 'Wrong Password Confirmation'
+                },{
+                    // settings
+                    type: 'danger',
+                    z_index: 9999
+                });
+            }else{
+                $.get("/api/user/" + id, {}, function(data){
+                    if(data['auth'] == "admin"){
+                        var name = $("#enterprise-edit-name").val();
+                        var address = $("#enterprise-edit-address").val();
+                        var phone = $("#enterprise-edit-phone").val();
+                        var email = $("#enterprise-edit-email").val();
+                        var filesize = $("#enterprise-edit-filesize").val();
+                        var user_limit = $("#enterprise-edit-user").val();
+                        $.put("/api/user/" + id, {"username": username, "password": password, "confirm": confirm, "name": name, "address": address, "phone": phone, "email": email, "filesize": filesize, "user_limit": user_limit}, function(data){
+                            if(data['err']){
+                                $.notify({
+                                    // options
+                                    icon: 'glyphicon glyphicon-warning-sign',
+                                    message: data['msg']
+                                },{
+                                    // settings
+                                    type: 'danger',
+                                    z_index: 9999
+                                });
+                            }else{
+                                $.notify({
+                                    // options
+                                    icon: 'glyphicon glyphicon-ok-circle',
+                                    message: 'Success!'
+                                },{
+                                    // settings
+                                    type: 'success',
+                                    z_index: 9999
+                                });
+                                setTimeout(location.reload.bind(location), 800);
+                            }
+                        });
+                    }else{
+                        $.put("/api/user/" + id, {"username": username, "password": password, "confirm": confirm}, function(data){
+                            if(data['err']){
+                                $.notify({
+                                    // options
+                                    icon: 'glyphicon glyphicon-warning-sign',
+                                    message: data['msg']
+                                },{
+                                    // settings
+                                    type: 'danger',
+                                    z_index: 9999
+                                });
+                            }else{
+                                $.notify({
+                                    // options
+                                    icon: 'glyphicon glyphicon-ok-circle',
+                                    message: 'Success!'
+                                },{
+                                    // settings
+                                    type: 'success',
+                                    z_index: 9999
+                                });
+                                setTimeout(location.reload.bind(location), 800);
+                            }
+                        });
+                    }
+                });
+
+            }
+
+        });
+    });
+</script>
+<div class="row">
+    <div class="col-sm-12">
+        <h1 class="page-header"><span class="lnr lnr-users"></span> Users &nbsp; <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#add-user-modal"><i class="fa fa-plus"></i> Add User</button></h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="content-panel">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h4><i class="lnr lnr-chevron-right"></i> User List</h4>
+                </div>
+                <div class="col-sm-4">
+                    <div class="text-right" style="margin-right: 15px; margin-top: 5px;">
+                        <form action="/users/s" method="post">
+                            <div class="input-group">
+                                <input type="text" name="search" id="search" class="form-control round-form" placeholder="Search">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary btn-round"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th width="5%">#</th>
+                        <th width="40%">Username</th>
+                        <th width="25%">Home Folder</th>
+                        <th width="15%">Auth</th>
+                        <th width="15%">Tools</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        {% if user['auth'] != 'root' %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ user['username'] }}</td>
+                                <td>{{ user['home_folder'] }}</td>
+                                <td>{{ user['auth'] }}</td>
+                                <td>
+                                    <button onclick="edit_user({{ user['id'] }})" class="btn btn-info btn-sm"><span class="fa fa-pencil"></span></button>
+                                    <button onclick="delete_user({{ user['id'] }})" class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></button>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Add User Modal -->
+<div class="modal fade" id="add-user-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form action="/users" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add User</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username" class="form-control" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm">Confirm Password</label>
+                        <input type="password" name="confirm" id="confirm" class="form-control" placeholder="Confirm Password">
+                    </div>
+                    {% if session['auth'] == 'root' %}
+                        <div class="alert alert-warning">Root User Can Only Add <b>Admin Enterprise User</b></div>
+                        <h3 class="page-header">Enterprise Data</h3>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="enterprise-name">Enterprise Name: </label>
+                                <input type="text" name="enterprise-name" id="enterprise-name" class="form-control" placeholder="Enterprise Name">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="enterprise-filesize">Enterprise File Size Limit <b>GB</b>: </label>
+                                <input type="text" class="form-control bfh-number" id="enterprise-filesize" name="enterprise-filesize" value="50">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="enterprise-address">Enterprise Address: </label>
+                                    <input type="text" name="enterprise-address" id="enterprise-address" class="form-control" placeholder="Enterprise Address">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="enterprise-user">Enterprise User Limit: </label>
+                                    <input type="text" class="form-control bfh-number" id="enterprise-user" name="enterprise-user" value="50">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="enterprise-email">Enterprise Email: </label>
+                                    <input type="text" name="enterprise-email" id="enterprise-email" class="form-control" placeholder="Enterprise Email">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="enterprise-phone">Enterprise Phone: </label>
+                                <input type="text" class="form-control bfh-phone" data-format="+62 ddd-dddd-dddd" name="enterprise-phone" id="enterprise-phone">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if session['auth'] == 'admin' %}
+                        <blockquote>
+                            Admin user can only add <b>Enterprise User</b>
+                        </blockquote>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Edit User Modal -->
+<div class="modal fade" id="edit-user-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form action="">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit User</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="edit-username">Username</label>
+                        <input type="text" name="username" id="edit-username" class="form-control" placeholder="Username">
+                    </div>
+                    <h3 class="page-header">Change User Password</h3>
+                    <div class="form-group">
+                        <label for="edit-password">New Password: </label>
+                        <input type="password" class="form-control" id="edit-password" name="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-confirm">Confirm Password: </label>
+                        <input type="password" class="form-control" id="edit-confirm" name="confirm" placeholder="Confirm Password">
+                    </div>
+                    {% if session['auth'] == 'root' %}
+                        <h3 class="page-header">Enterprise Data</h3>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="enterprise-edit-name">Enterprise Name: </label>
+                                    <input type="text" name="enterprise-edit-name" id="enterprise-edit-name" class="form-control" placeholder="Enterprise Name">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Enterprise File Size Limit <b>GB</b>: </label>
+                                    <input type="text" class="form-control bfh-number" id="enterprise-edit-filesize" name="enterprise-edit-filesize">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="enterprise-address">Enterprise Address: </label>
+                                        <input type="text" name="enterprise-edit-address" id="enterprise-edit-address" class="form-control" placeholder="Enterprise Address">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="enterprise-edit-user">Enterprise User Limit: </label>
+                                        <input type="text" class="form-control bfh-number" id="enterprise-edit-user" name="enterprise-edit-user">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="enterprise-edit-email">Enterprise Email: </label>
+                                        <input type="text" name="enterprise-edit-email" id="enterprise-edit-email" class="form-control" placeholder="Enterprise Email">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="enterprise-edit-phone">Enterprise Phone: </label>
+                                    <input type="text" class="form-control bfh-phone" data-format="+62 ddd-dddd-dddd" name="enterprise-edit-phone" id="enterprise-edit-phone">
+                                </div>
+                            </div>
+                    {% endif %}
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="edit-user" class="btn btn-primary"><i class="fa fa-check"></i> Edit</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

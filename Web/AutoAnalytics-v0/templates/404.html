@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+    <title>404 - Page not Found</title>
+    <link rel=icon href="{{ url_for('static', filename='img/logo.png') }}">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='assets/css/bootstrap.css') }}" rel="stylesheet">
+    <!--external css-->
+    <link href="{{ url_for('static', filename='assets/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/css/style-responsive.css') }}" rel="stylesheet">
+
+      <link href="{{ url_for('static', filename='linearicons/style.css') }}" rel="stylesheet">
+  </head>
+
+  <body onload="getTime()">
+
+      <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+
+	  	<div class="container">
+	  	
+  			<div class="col-lg-12">
+  				<div class="lock-screen">
+	  				<h1 class="text-center" style="color: white; font-size: 120px; margin-top: 200px;">404</h1>
+	  				<h2 class="text-center" style="color: white; font-size: 50px; margin-top: 2px;">Page not Found</h2>
+                    <br>
+	  				<div class="text-center">
+                        <a href="javascript:history.go(-1)"><button class="btn btn-danger"><span class="fa fa-chevron-left"></span> &nbsp; Back</button></a>
+                        <span style="color: white; font-size: 30px;">&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+	  					<a href="/"><button class="btn btn-success"><span class="fa fa-home"></span> &nbsp; Home</button></a>
+	  				</div>
+  				</div>
+  			</div>
+	  	
+	  	</div><!-- /container -->
+
+    <!-- js placed at the end of the document so the pages load faster -->
+	<script src="{{ url_for('static', filename='assets/js/jquery.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/bootstrap.min.js') }}"></script>
+
+    <!--BACKSTRETCH-->
+	<!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+	<script type="text/javascript" src="{{ url_for('static', filename='assets/js/jquery.backstretch.min.js') }}"></script>
+	<script>
+		$.backstretch("{{ url_for('static', filename='img/404.jpg') }}", {speed: 500});
+	</script>
+
+  </body>
+</html>
